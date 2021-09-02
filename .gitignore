@@ -6,3 +6,4 @@
 /.idea
 /.vs
 /node_modules
+/config.js

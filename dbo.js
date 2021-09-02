@@ -1,14 +1,10 @@
-var mysql = require('mysql');
+var mysql = require('mysql')
+const configDb = require('./config')
 
 class Database {
     conn;
     constructor() {
-        this.conn = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            database: 'sellena',
-            password: 'Bynthytn142'
-        });
+        this.conn = mysql.createConnection(configDb);
 
         this.conn.connect(err => {
             if (err) {
