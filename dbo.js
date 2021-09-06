@@ -20,6 +20,20 @@ class Database {
         });
     }
 
+    sprgoods(res) {
+        this.conn.query('select id,name from goods order by name', (err, result) => {
+            res.send(result)
+        });
+    }
+
+    getgoodById(res, id) {
+        this.conn.query('Select * from supply where id='+id,
+            (err, result) => {
+            res.send(result)
+        });
+        
+    }
+
     getsupply(res) {
         this.conn.query('SELECT a.*,b.name good_name,s.icon FROM supply a LEFT JOIN goods b ON b.id = a.goods_id LEFT JOIN good_status s ON s.id = a.status_id',
             (err, result) => {
