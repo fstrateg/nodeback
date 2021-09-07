@@ -26,6 +26,10 @@ class Database {
         });
     }
 
+    sprstatus(res) {
+        this.conn.query('select id,status,icon from good_status', (err, result) => { res.send(result) })
+    }
+
     getgoodById(res, id) {
         this.conn.query('Select * from supply where id='+id,
             (err, result) => {
