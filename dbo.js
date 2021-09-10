@@ -45,6 +45,20 @@ class Database {
             })
     }
 
+    saveSupply(res, rw) {
+        const dat = rw.dat.substring(0, 10)
+        var rw = { ...rw, dat }
+        const columns = Object.keys(rw);
+        const values = Object.values(rw);
+        var query = ''
+        query='update supply set ' + columns.join('=?,') + '=? where id=' + rw.id;
+        this.conn.query(query,
+            values,
+            (err, result) => {
+                if (!err) res.send('ok')
+                else console.error(err);
+            });
+    }
 
 }
 module.exports = Database;

@@ -1,5 +1,6 @@
 var express=require('express');
-var dbo=require('./dbo');
+const { Types } = require('mysql');
+var dbo = require('./dbo');
 
 var router=express.Router();
 
@@ -39,8 +40,10 @@ router.get("/api/sprstatus", function (req, res) {
 })
 
 router.post("/api/savesupply", function (req, res) {
-    console.log(req.body);
-    res.send('ok');
+    //console.log(req.body);
+    var rw = req.body;
+    console.log(rw);
+    new dbo().saveSupply(res, rw);
 })
 /*conn.end((err)=>{
     if (err)
