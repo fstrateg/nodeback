@@ -50,8 +50,31 @@ class Database {
         var rw = { ...rw, dat }
         const columns = Object.keys(rw);
         const values = Object.values(rw);
+        if (rw.id > 0)
+            this.updateSupply(columns, values, res, rw);
+        else
+            this.insertSupply(columns, values, res, rw);
+        
+    }
+
+    insertSupply(columns, values, res, rw) {
         var query = ''
-        query='update supply set ' + columns.join('=?,') + '=? where id=' + rw.id;
+        query = 'insert into supply set ' + columns.join('=?,') + '=?';
+        console.log(columns)
+        console.log(values)
+        console.log(query);
+
+        this.conn.query(query,
+            values,
+            (err, result) => {
+                if (!err) res.send('ok')
+                else console.error(err);
+            });
+    }
+
+    updateSupply(columns, values, res, rw) {
+        var query = ''
+        query = 'update supply set ' + columns.join('=?,') + '=? where id=' + rw.id;
         this.conn.query(query,
             values,
             (err, result) => {
