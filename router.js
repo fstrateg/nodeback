@@ -16,6 +16,11 @@ router.get("/api/goods", function (req,res) {
     db.getgoods(res);
 })
 
+router.get("/api/good/:id", function (req, res){
+    var db = new dbo();
+    db.getGoodById(res, req.params.id)
+})
+
 router.get("/api/sprgoods", function (req, res) {
     var db = new dbo();
     db.getgoods(res);

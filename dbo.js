@@ -26,6 +26,12 @@ class Database {
         });
     }
 
+    getGoodById(res, id) {
+        this.conn.query('Select * from goods where id='+id, (err, result) => {
+            res.send(result)
+        });
+    }
+
     sprstatus(res) {
         this.conn.query('select id,status,icon from good_status', (err, result) => { res.send(result) })
     }
@@ -39,7 +45,7 @@ class Database {
     }
 
     getsupply(res) {
-        this.conn.query('SELECT a.*,b.name good_name,s.icon FROM supply a LEFT JOIN goods b ON b.id = a.goods_id LEFT JOIN good_status s ON s.id = a.status_id',
+        this.conn.query('select * from v_supply',
             (err, result) => {
                 res.send(result)
             })
