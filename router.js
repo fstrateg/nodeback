@@ -21,6 +21,13 @@ router.get("/api/good/:id", function (req, res){
     db.getGoodById(res, req.params.id)
 })
 
+router.post("/api/savegoods", function (req, res) {
+    var rw = req.body;
+    var db = new dbo();
+    console.log(rw);
+    db.saveGoods(res, rw);
+})
+
 router.get("/api/sprgoods", function (req, res) {
     var db = new dbo();
     db.getgoods(res);
@@ -47,7 +54,6 @@ router.get("/api/sprstatus", function (req, res) {
 router.post("/api/savesupply", function (req, res) {
     //console.log(req.body);
     var rw = req.body;
-    console.log(rw);
     new dbo().saveSupply(res, rw);
 })
 /*conn.end((err)=>{

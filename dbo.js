@@ -32,6 +32,36 @@ class Database {
         });
     }
 
+    saveGoods(res, rw) {
+        const columns = Object.keys(rw);
+        const values = Object.values(rw);
+        if (rw.id > 0)
+            this.updateTable('goods',columns, values, rw.id, (err, data) => {
+                if (!err) res.send('ok')
+                else console.log(err)
+            })
+        else
+            this.insertTable('goods' , columns, values, (err, data) => {
+                if (!err) res.send('ok')
+                else console.log(err)
+            });
+    }
+
+    updateTable(table, columns, values, id, callback) {
+        var query = ''
+        query = 'update ' + table + ' set ' + columns.join('=?,') + '=? where id=' + id;
+        this.conn.query(query,
+            values, callback);
+    }
+
+    insertTable(table, columns, values, callback) {
+        var query = ''
+        query = 'insert into ' + table + ' set ' + columns.join('=?,') + '=?';
+        console.log(query)
+        this.conn.query(query,
+            values, callback);
+    }
+
     sprstatus(res) {
         this.conn.query('select id,status,icon from good_status', (err, result) => { res.send(result) })
     }
