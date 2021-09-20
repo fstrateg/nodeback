@@ -1,4 +1,4 @@
-var dbo=require('../dbo')
+const dbo=require('../dbo')
 const db=new dbo()
 
 describe('Tests for dbo', function () {

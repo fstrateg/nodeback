@@ -11,54 +11,51 @@ router.get("/", function (req,res)
     res.end();
 })
 
-router.get("/api/goods", function (req,res) {
-    var db=new dbo();
-    db.getgoods(res);
+router.get("/api/goods", (req,res)=>{
+    dbo.instanceDbo().getgoods((err, rez) => {
+        res.send(rez)
+    })
 })
 
-router.get("/api/good/:id", function (req, res){
-    var db = new dbo();
-    db.getGoodById(res, req.params.id)
+router.get("/api/good/:id", (req, res)=>{
+
+    dbo.instanceDbo().getGoodById(req.params.id, (err, vl) => {
+        res.send(vl)
+    })
 })
 
-router.post("/api/savegoods", function (req, res) {
-    var rw = req.body;
-    var db = new dbo();
-    console.log(rw);
-    db.saveGoods(res, rw);
+router.post("/api/savegoods", (req, res)=>{
+    dbo.instanceDbo().saveGoods(req.body, (err, rez) => {
+        res.send(rez);
+    });
 })
 
-router.get("/api/sprgoods", function (req, res) {
-    var db = new dbo();
-    db.getgoods(res);
-}
-)
-
-router.get("/api/supplybyid/:id", function (req, res) {
-    var db = new dbo();
-    //console.log(req.params.id);
-    //db.getgoods(res);
-    db.getgoodById(res, req.params.id);
+router.get("/api/sprgoods", (req, res) => {
+    dbo.instanceDbo().getgoods((err, rez) => {
+        res.send(rez)
+    })
 })
 
-router.get("/api/supply", function (req, res) {
-    var db = new dbo();
-    db.getsupply(res);
+router.get("/api/supplybyid/:id", (req, res) => {
+    dbo.instanceDbo().getSupplyById(req.params.id, (err, rez) => {
+        res.send(rez)
+    })
 })
 
-router.get("/api/sprstatus", function (req, res) {
-    var db = new dbo();
-    db.sprstatus(res);
+router.get("/api/supply", (req, res) => {
+    dbo.instanceDbo().getsupply((err, rez) => { res.send(rez) })
+})
+
+router.get("/api/sprstatus", (req, res) => {
+    dbo.instanceDbo().sprstatus((err, rez) => {
+        res.send(rez)
+    })
 })
 
 router.post("/api/savesupply", function (req, res) {
-    //console.log(req.body);
-    var rw = req.body;
-    new dbo().saveSupply(res, rw);
+    dbo.instanceDbo().saveSupply(req.body, (err, rez) => {
+        res.send(rez)
+    })
 })
-/*conn.end((err)=>{
-    if (err)
-        console.log(err);
-});*/
 
 module.exports = router;
