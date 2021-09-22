@@ -26,7 +26,11 @@ router.get("/api/good/:id", (req, res)=>{
 
 router.post("/api/savegoods", (req, res)=>{
     dbo.instanceDbo().saveGoods(req.body, (err, rez) => {
-        res.send(rez);
+            if (!err) res.send(rez)
+        else {
+                console.log(err)
+                res.status(400).json({message: err})
+            }
     });
 })
 

@@ -4,6 +4,7 @@ const configDb = require('./config')
 class Database {
     conn;
     sql;
+    lastError;
 
     constructor() {
         this.conn = mysql.createConnection(configDb);
@@ -30,32 +31,38 @@ class Database {
 
     validateGoods(rw)
     {
+        this.lastError=''
         if (rw==undefined) {
-            throw new Error('Goods is undefined!')
+            this.lastError='Goods is undefined!'
             return false
         }
         if (!rw.name) {
-            throw new Error('Name is empty or undefined!')
+            this.lastError='Name is empty or undefined!'
             return false
         }
         if(!rw.name.trim()) {
-            throw new Error('Name is empty or undefined!')
+            this.lastError='Name is empty or undefined!'
             return false
         }
         if (typeof rw.prep_defs!="number")
         {
-            throw new Error('Prep service should be number!')
+            this.lastError='Prep service should be number!'
             return false
         }
         if (typeof rw.img_id!="number")
         {
-            throw new Error('Image ID should be number!')
+            this.lastError='Image ID should be number!'
             return false
         }
         return true
     }
 
     saveGoods(rw,callb) {
+        if (!this.validateGoods(rw))
+        {
+            callb(this.lastError,undefined)
+            return;
+        }
         const columns = Object.keys(rw);
         const values = Object.values(rw);
         if (rw.id > 0)
