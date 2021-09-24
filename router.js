@@ -50,6 +50,14 @@ router.get("/api/supply", (req, res) => {
     dbo.instanceDbo().getsupply((err, rez) => { res.send(rez) })
 })
 
+router.get("/api/moving",(req, res)=>{
+    dbo.instanceDbo().getMoving((err,rez)=>{ res.send(rez)})
+})
+
+router.get("/api/move/:id", (req, res) => {
+    dbo.instanceDbo().getMoveById(req.params.id, (err, rez) => { res.send(rez) })
+})
+
 router.get("/api/sprstatus", (req, res) => {
     dbo.instanceDbo().sprstatus((err, rez) => {
         res.send(rez)
@@ -62,4 +70,9 @@ router.post("/api/savesupply", function (req, res) {
     })
 })
 
+router.get("/api/remains", (req,res)=>{
+    dbo.instanceDbo().getRemains((err,rez)=>{
+        res.send(rez)
+    })
+})
 module.exports = router;

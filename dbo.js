@@ -108,13 +108,30 @@ class Database {
 
     }
 
+    getMoving(callb)
+    {
+        this.getTable('v_moving', callb)
+    }
+
+    getMoveById(id, callb) {
+        this.setQuery(`Select * from goods_moving where id=${id}`).query(callb)
+    }
+
     setQuery(query) {
         this.sql = query
         return this
     }
 
+    getRemains(callb) {
+        this.getTable('v_goods_remains', callb)
+    }
+
     query(callb) {
         this.conn.query(this.sql, callb)
+    }
+
+    getTable(table_name, callb) {
+        this.setQuery(`Select * from ${table_name}`).query(callb)
     }
 }
 module.exports = Database;
