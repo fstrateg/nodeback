@@ -1,5 +1,4 @@
 var express=require('express');
-const { Types } = require('mysql');
 var dbo = require('./dbo');
 
 var router=express.Router();
@@ -35,7 +34,7 @@ router.post("/api/savegoods", (req, res)=>{
 })
 
 router.get("/api/sprgoods", (req, res) => {
-    dbo.instanceDbo().getgoods((err, rez) => {
+    dbo.instanceDbo().sprgoods((err, rez) => {
         res.send(rez)
     })
 })
@@ -51,7 +50,24 @@ router.get("/api/supply", (req, res) => {
 })
 
 router.get("/api/moving",(req, res)=>{
-    dbo.instanceDbo().getMoving((err,rez)=>{ res.send(rez)})
+    dbo.instanceDbo().getMoving((err,rez)=>{ res.send(rez)}, req.query)
+})
+
+router.get("/api/movingsize", (req, res)=>{
+    dbo.instanceDbo().getMovingSize((err,rez)=>{
+        res.send(rez)
+    })
+})
+
+router.post("/api/savemoving", (req, res)=>{
+    dbo.instanceDbo().saveMoving(req.body, (err,rez)=>{
+        if(!err) res.send("ok")
+        else {
+            console.log(err)
+            res.status(500).send(err)
+        }
+    })
+    console.log(req.body)
 })
 
 router.get("/api/move/:id", (req, res) => {

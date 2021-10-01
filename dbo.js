@@ -19,10 +19,8 @@ class Database {
         this.setQuery('Select * from goods').query(callb);
     }
     
-    sprgoods(res) {
-        this.conn.query('select id,name from goods order by name', (err, result) => {
-            res.send(result)
-        });
+    sprgoods(callb) {
+        this.setQuery('select id,name from goods order by name').query(callb)
     }
 
     getGoodById(id, callb) {
@@ -32,7 +30,7 @@ class Database {
     validateGoods(rw)
     {
         this.lastError=''
-        if (rw==undefined) {
+        if (rw===undefined) {
             this.lastError='Goods is undefined!'
             return false
         }
@@ -69,6 +67,19 @@ class Database {
             this.updateTable('goods', columns, values, rw.id, callb)
         else
             this.insertTable('goods' , columns, values, callb);
+    }
+
+    saveMoving(rw,callb)
+    {
+        if (typeof(rw.id)=="number" && rw.id<0) delete rw.id
+        const dat = rw.dat.substring(0, 10)
+        rw = {...rw, dat}
+        const columns = Object.keys(rw);
+        const values = Object.values(rw);
+        if (rw.id > 0)
+            this.updateTable('goods_moving', columns, values, rw.id, callb)
+        else
+            this.insertTable('goods_moving' , columns, values, callb);
     }
 
     updateTable(table, columns, values, id, callback) {
@@ -108,9 +119,16 @@ class Database {
 
     }
 
-    getMoving(callb)
+    getMoving(callb,query)
     {
-        this.getTable('v_moving', callb)
+        let size=query.size?query.size:10;
+        let start=((query.cur?query.cur:1)-1)*size
+        let sql=`v_moving limit  ${start},${size}`
+        this.getTable( sql, callb)
+    }
+
+    getMovingSize(callb){
+        this.setQuery('Select count(*) cnt from goods_moving').query(callb)
     }
 
     getMoveById(id, callb) {
