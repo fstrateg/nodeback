@@ -46,7 +46,12 @@ router.get("/api/supplybyid/:id", (req, res) => {
 })
 
 router.get("/api/supply", (req, res) => {
-    dbo.instanceDbo().getsupply((err, rez) => { res.send(rez) })
+    dbo.instanceDbo().getsupply((err, rez) => {
+        if (err)
+            console.log(err)
+        else
+            res.send(rez)
+    })
 })
 
 router.get("/api/moving",(req, res)=>{
