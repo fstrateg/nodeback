@@ -16,7 +16,7 @@ class Database {
     }
 
     getgoods(callb) {
-        this.setQuery('Select * from goods').query(callb);
+        this.setQuery('Select * from goods order by id desc').query(callb);
     }
     
     sprgoods(callb) {
