@@ -1,6 +1,8 @@
 var express=require('express');
 var dbo = require('./dbo');
 
+
+
 var router=express.Router();
 
 
@@ -12,6 +14,7 @@ router.get("/", function (req,res)
 
 router.get("/api/goods", (req,res)=>{
     dbo.instanceDbo().getgoods((err, rez) => {
+        res.header("Access-Control-Allow-Origin", "*")
         res.send(rez)
     })
 })
@@ -19,6 +22,7 @@ router.get("/api/goods", (req,res)=>{
 router.get("/api/good/:id", (req, res)=>{
 
     dbo.instanceDbo().getGoodById(req.params.id, (err, vl) => {
+        res.header("Access-Control-Allow-Origin", "*")
         res.send(vl)
     })
 })
@@ -35,18 +39,21 @@ router.post("/api/savegoods", (req, res)=>{
 
 router.get("/api/sprgoods", (req, res) => {
     dbo.instanceDbo().sprgoods((err, rez) => {
+        res.header("Access-Control-Allow-Origin", "*")
         res.send(rez)
     })
 })
 
 router.get("/api/supplybyid/:id", (req, res) => {
     dbo.instanceDbo().getSupplyById(req.params.id, (err, rez) => {
+        res.header("Access-Control-Allow-Origin", "*")
         res.send(rez)
     })
 })
 
 router.get("/api/supply", (req, res) => {
     dbo.instanceDbo().getsupply((err, rez) => {
+        res.header("Access-Control-Allow-Origin", "*")
         if (err)
             console.log(err)
         else
@@ -55,11 +62,12 @@ router.get("/api/supply", (req, res) => {
 })
 
 router.get("/api/moving",(req, res)=>{
-    dbo.instanceDbo().getMoving((err,rez)=>{ res.send(rez)}, req.query)
+    dbo.instanceDbo().getMoving((err,rez)=>{ res.header("Access-Control-Allow-Origin", "*"); res.send(rez)}, req.query)
 })
 
 router.get("/api/movingsize", (req, res)=>{
     dbo.instanceDbo().getMovingSize((err,rez)=>{
+        res.header("Access-Control-Allow-Origin", "*")
         res.send(rez)
     })
 })
@@ -81,18 +89,21 @@ router.get("/api/move/:id", (req, res) => {
 
 router.get("/api/sprstatus", (req, res) => {
     dbo.instanceDbo().sprstatus((err, rez) => {
+        res.header("Access-Control-Allow-Origin", "*")
         res.send(rez)
     })
 })
 
 router.post("/api/savesupply", function (req, res) {
     dbo.instanceDbo().saveSupply(req.body, (err, rez) => {
+        res.header("Access-Control-Allow-Origin", "*")
         res.send(rez)
     })
 })
 
 router.get("/api/remains", (req,res)=>{
     dbo.instanceDbo().getRemains((err,rez)=>{
+        res.header("Access-Control-Allow-Origin", "*")
         res.send(rez)
     })
 })
