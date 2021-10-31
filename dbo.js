@@ -9,6 +9,7 @@ class Database {
     constructor() {
         this.conn = mysql.createConnection(configDb);
         this.conn.connect()
+        //this.conn.connect()
     }
 
     static instanceDbo() {
@@ -86,13 +87,15 @@ class Database {
         let query = `update ${table}  set ${columns.join('=?,')}=? where id= ${id}`;
         this.conn.query(query,
             values, callback);
+        this.connectionEnd()
     }
 
     insertTable(table, columns, values, callback) {
         let query = `insert into ${table} set ${columns.join('=?,')}=?`;
         console.log(query)
         this.conn.query(query,
-            values, callback);
+            values, callback)
+        this.connectionEnd()
     }
 
     sprstatus(callb) {
@@ -104,7 +107,8 @@ class Database {
     }
 
     getsupply(callb) {
-        this.setQuery('select * from v_supply').query(callb)
+        //this.setQuery('select * from v_supply').query(callb)
+        this.getTable('v_supply',callb)
     }
 
     saveSupply(rw, callb) {
@@ -146,10 +150,16 @@ class Database {
 
     query(callb) {
         this.conn.query(this.sql, callb)
+        this.connectionEnd()
     }
 
     getTable(table_name, callb) {
         this.setQuery(`Select * from ${table_name}`).query(callb)
+    }
+
+    connectionEnd()
+    {
+        this.conn.end()
     }
 }
 module.exports = Database;
