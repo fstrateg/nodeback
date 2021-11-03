@@ -106,9 +106,19 @@ class Database {
         this.setQuery(`Select * from supply where id=${id}`).query(callb)
     }
 
-    getsupply(callb) {
-        //this.setQuery('select * from v_supply').query(callb)
-        this.getTable('v_supply',callb)
+    getsupply(filter, callb) {
+        let usl=''
+        if (filter.filter!=undefined)
+        {
+            let flt=JSON.parse(filter.filter)
+            let rz=' where '
+            if (flt.done=='False') {
+                usl+=rz+'status_id<>6'
+                rz=' AND '
+            }
+            if (flt.good>0) usl+=rz+'goods_id='+flt.good
+        }
+        this.getTable('v_supply'+usl,callb)
     }
 
     saveSupply(rw, callb) {

@@ -51,8 +51,8 @@ router.get("/api/supplybyid/:id", (req, res) => {
     })
 })
 
-router.get("/api/supply", (req, res) => {
-    dbo.instanceDbo().getsupply((err, rez) => {
+router.get("/api/supply/", (req, res) => {
+    dbo.instanceDbo().getsupply(req.query,(err, rez) => {
         res.header("Access-Control-Allow-Origin", "*")
         if (err)
             console.log(err)
