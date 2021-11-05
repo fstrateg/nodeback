@@ -61,6 +61,13 @@ router.get("/api/supply/", (req, res) => {
     })
 })
 
+router.delete("/api/supply/del/:id", (req,res)=>{
+    dbo.instanceDbo().delSupply(req.params.id, (err,rez)=>{
+        res.send(rez)
+    })
+    console.log('Delete id='+req.params.id)
+})
+
 router.get("/api/moving",(req, res)=>{
     dbo.instanceDbo().getMoving((err,rez)=>{ res.header("Access-Control-Allow-Origin", "*"); res.send(rez)}, req.query)
 })
