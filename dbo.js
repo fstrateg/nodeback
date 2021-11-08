@@ -84,15 +84,14 @@ class Database {
     }
 
     updateTable(table, columns, values, id, callback) {
-        let query = `update ${table}  set ${columns.join('=?,')}=? where id= ${id}`;
+        let query = `update ${table}  set ${columns.join('=?,')}=? where id= ${id}`
         this.conn.query(query,
             values, callback);
         this.connectionEnd()
     }
 
     insertTable(table, columns, values, callback) {
-        let query = `insert into ${table} set ${columns.join('=?,')}=?`;
-        console.log(query)
+        let query = `insert into ${table} set ${columns.join('=?,')}=?`
         this.conn.query(query,
             values, callback)
         this.connectionEnd()
