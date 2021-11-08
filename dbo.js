@@ -120,6 +120,11 @@ class Database {
         this.getTable('v_supply'+usl,callb)
     }
 
+    delSupply(id, callb)
+    {
+        this.setQuery('delete from supply where id='+id).query(callb)
+    }
+
     saveSupply(rw, callb) {
         const dat = rw.dat.substring(0, 10)
         rw = {...rw, dat}
